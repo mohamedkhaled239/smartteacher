@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../injection_container.dart';
 import '../../../payments/presentation/pages/payments_page.dart';
 import '../../../grades/presentation/pages/grades_page.dart';
-import '../../../groups/presentation/pages/study_groups_page.dart';
+import '../../../groups/presentation/bloc/groups_bloc.dart';
+import '../../../groups/presentation/bloc/groups_event.dart';
+import '../../../groups/presentation/pages/groups_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
   const MainNavigationPage({super.key});
@@ -13,13 +17,22 @@ class MainNavigationPage extends StatefulWidget {
 class _MainNavigationPageState extends State<MainNavigationPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    StudyGroupsPage(),
-    GradesPage(),
-    _StudentsPlaceholder(),
-    PaymentsPage(),
-    _SettingsPlaceholder(),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      BlocProvider(
+        create: (context) => sl<GroupsBloc>()..add(const LoadGroupsEvent()),
+        child: const GroupsPage(),
+      ),
+      const GradesPage(),
+      const _StudentsPlaceholder(),
+      const PaymentsPage(),
+      const _SettingsPlaceholder(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

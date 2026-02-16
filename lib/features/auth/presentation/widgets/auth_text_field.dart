@@ -10,6 +10,7 @@ class AuthTextField extends StatelessWidget {
   final VoidCallback? onTogglePassword;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final bool enabled;
 
   const AuthTextField({
     super.key,
@@ -22,6 +23,7 @@ class AuthTextField extends StatelessWidget {
     this.onTogglePassword,
     this.keyboardType,
     this.validator,
+    this.enabled = true,
   });
 
   @override
@@ -44,6 +46,7 @@ class AuthTextField extends StatelessWidget {
           keyboardType: keyboardType,
           textAlign: TextAlign.right,
           validator: validator,
+          enabled: enabled,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),

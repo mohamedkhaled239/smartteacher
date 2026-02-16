@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'features/auth/presentation/pages/login_page.dart';
+import 'features/auth/presentation/pages/splash_page.dart';
+import 'core/constants/global_keys.dart';
+import 'injection_container.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.initializeDependencies();
   runApp(const MyApp());
 }
 
@@ -20,10 +24,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Cairo',
       ),
 
-      // Entry point: Login Page
-      home: const LoginPage(),
-      // home: const AccountTypeSelectionPage(),
-      // home: const StudyGroupsPage(),
+      navigatorKey: navigatorKey,
+      // Entry point: Splash Page checks login state
+      home: const SplashPage(),
     );
   }
 }
